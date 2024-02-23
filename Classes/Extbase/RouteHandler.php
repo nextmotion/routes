@@ -99,11 +99,12 @@ class RouteHandler
      */
     private function processRoute(ServerRequestInterface $request, Route $route): void
     {
-        if (array_key_exists('routes', $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'])
-            && array_key_exists('activeCache', $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['routes'])
-            && $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['routes']['activeCache'] === '0'
-        ) {
-            $GLOBALS['TSFE']->set_no_cache('Conflicts with more than one action');
+        if (array_key_exists('routes', $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'])) {
+           $activeCache = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['routes']['activeCache'] ?? 0;
+            $activeCache = (bool)$activeCache;
+            if ($activeCache) {
+                $GLOBALS['TSFE']->set_no_cache('Conflicts with more than one action');
+            }
         }
         $GLOBALS['TSFE']->determineId($request);
         $GLOBALS['TSFE']->getConfigArray();
