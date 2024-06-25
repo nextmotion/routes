@@ -102,7 +102,7 @@ class RouteHandler
         if (array_key_exists('routes', $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'])) {
            $activeCache = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['routes']['activeCache'] ?? 0;
             $activeCache = (bool)$activeCache;
-            if ($activeCache) {
+            if (!$activeCache) {
                 $GLOBALS['TSFE']->set_no_cache('Conflicts with more than one action');
             }
         }
