@@ -1,8 +1,9 @@
 <?php
+
 /** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace LMS\Routes\Tests\Acceptance\Support\Helper;
 

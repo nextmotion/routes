@@ -6,13 +6,13 @@ $EM_CONF['routes'] = [
     'category' => 'fe',
     'author' => 'Borulko Serhii',
     'author_email' => 'borulkosergey@icloud.com',
-    'state' => 'beta',
+    'state' => 'stable',
     'clearCacheOnLoad' => true,
-    'version' => '3.0.0',
+    'version' => '4.0.0',
     'constraints' => [
         'depends' => [
-            'php' => '7.4.0-8.1.99',
-            'typo3' => '11.5.3-11.5.99'
-        ]
-    ]
+            'php' => '8.2.0-8.4.99',
+            'typo3' => '13.4.0-13.4.99',
+        ],
+    ],
 ];

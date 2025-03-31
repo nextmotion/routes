@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace LMS\Routes\Tests\Functional\Api;
 
@@ -31,6 +31,8 @@ use LMS\Routes\Tests\Functional\BaseTest;
 
 /**
  * @author Borulko Sergey <borulkosergey@icloud.com>
+ *
+ * @internal
  */
 class ApiTest extends BaseTest
 {
@@ -47,7 +49,7 @@ class ApiTest extends BaseTest
     /**
      * @test
      */
-    public function auth_middleware_can_pass(): void
+    public function authMiddlewareCanPass(): void
     {
         $response = $this->callEndpoint('demo/middleware/auth-required');
 
@@ -57,7 +59,7 @@ class ApiTest extends BaseTest
     /**
      * @test
      */
-    public function admin_backend_user_required(): void
+    public function adminBackendUserRequired(): void
     {
         $response = $this->callEndpoint('demo/middleware', true, true, false);
 
@@ -67,7 +69,7 @@ class ApiTest extends BaseTest
     /**
      * @test
      */
-    public function group_middleware_can_pass(): void
+    public function groupMiddlewareCanPass(): void
     {
         $response = $this->callEndpoint('demo/middleware/in-group');
 
@@ -77,7 +79,7 @@ class ApiTest extends BaseTest
     /**
      * @test
      */
-    public function group_middleware_can_pass_if_admin(): void
+    public function groupMiddlewareCanPassIfAdmin(): void
     {
         $response = $this->callEndpoint('demo/middleware/in-group/admin');
 
@@ -87,7 +89,7 @@ class ApiTest extends BaseTest
     /**
      * @test
      */
-    public function group_middleware_can_block(): void
+    public function groupMiddlewareCanBlock(): void
     {
         $response = $this->callEndpoint('demo/middleware/in-group-blocked');
 
@@ -97,7 +99,7 @@ class ApiTest extends BaseTest
     /**
      * @test
      */
-    public function user_middleware_can_block(): void
+    public function userMiddlewareCanBlock(): void
     {
         $response = $this->callEndpoint('demo/middleware/own?user=999&title=demo');
 
@@ -107,7 +109,7 @@ class ApiTest extends BaseTest
     /**
      * @test
      */
-    public function auth_middleware_requires_proper_csrf_token(): void
+    public function authMiddlewareRequiresProperCsrfToken(): void
     {
         $response = $this->callEndpoint('demo/middleware/auth-required', false, false);
 
@@ -117,7 +119,7 @@ class ApiTest extends BaseTest
     /**
      * @test
      */
-    public function throttle_middleware_blocks_dos(): void
+    public function throttleMiddlewareBlocksDos(): void
     {
         foreach (range(0, 1) as $step) {
             $response = $this->callEndpoint('demo/throttle', false, false);

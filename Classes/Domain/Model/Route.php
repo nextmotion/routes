@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Domain\Model;
 
@@ -27,8 +28,9 @@ namespace LMS\Routes\Domain\Model;
  * ************************************************************* */
 
 use LMS\Routes\Support\Plugin;
-use LMS\Routes\Support\Route\Controller;
 use LMS\Routes\Support\Route\Arguments as ContainsArguments;
+use LMS\Routes\Support\Route\Controller;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * @author Sergey Borulko <borulkosergey@icloud.com>
@@ -49,14 +51,14 @@ class Route
         $this->pluginService = $service;
     }
 
-    public function setConfiguration(array $config): void
+    public function setConfiguration(array $config, ServerRequestInterface $request): void
     {
         [$controllerFQCN, $this->action] = explode('::', $config['_controller']);
 
         $this->plugin = $config['plugin'] ?? '';
         $this->format = $config['_format'] ?? '';
 
-        $this->controller->initializeController($controllerFQCN);
+        $this->controller->initializeController($controllerFQCN, $request);
         $this->initializeArguments($config);
     }
 
@@ -81,7 +83,8 @@ class Route
     public function getPluginNamespace(): string
     {
         return $this->pluginService
-            ->getNamespaceBasedOn($this->controller->getExtension(), $this->getPlugin());
+            ->getNamespaceBasedOn($this->controller->getExtension(), $this->getPlugin())
+        ;
     }
 
     public function getController(): Controller

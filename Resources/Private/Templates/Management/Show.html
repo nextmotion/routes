@@ -1,6 +1,13 @@
+<html
+        xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+        data-namespace-typo3-fluid="true">
+
 <f:layout name="Default" />
 
 <f:section name="Content">
+
+    <div class="body-content">
+        <h1>Route: <em>{route.path}</em></h1>
 
     <f:render partial="Route/Endpoint" arguments="{_all}"/>
 
@@ -27,5 +34,7 @@
     <f:if condition="{route.schemes}">
         <f:render partial="Route/Schemes" arguments="{_all}"/>
 	</f:if>
+    </div>
 
 </f:section>
+</html>

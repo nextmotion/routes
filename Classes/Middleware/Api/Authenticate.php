@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Middleware\Api;
 
@@ -30,12 +31,13 @@ use TYPO3\CMS\Core\Http\PropagateResponseException;
 
 /**
  * @psalm-suppress PropertyNotSetInConstructor
+ *
  * @author Sergey Borulko <borulkosergey@icloud.com>
  */
 class Authenticate extends AbstractRouteMiddleware
 {
     /**
-     * Redirect to login page if not authorized
+     * Redirect to login page if not authorized.
      *
      * {@inheritDoc}
      */
@@ -49,7 +51,7 @@ class Authenticate extends AbstractRouteMiddleware
 
         if (!$this->response->isJson() && $loginPage) {
             throw new PropagateResponseException(
-                $this->redirect->toPage($loginPage)
+                $this->redirect->toPage($loginPage),
             );
         }
 

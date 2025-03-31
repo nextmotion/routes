@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace LMS\Routes\Support;
 
@@ -29,7 +29,8 @@ namespace LMS\Routes\Support;
 
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\Request;
-use TYPO3\CMS\Core\Http\{HtmlResponse, JsonResponse};
+use TYPO3\CMS\Core\Http\HtmlResponse;
+use TYPO3\CMS\Core\Http\JsonResponse;
 
 /**
  * @author Sergey Borulko <borulkosergey@icloud.com>

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Middleware\Api;
 
@@ -28,12 +29,13 @@ namespace LMS\Routes\Middleware\Api;
 
 /**
  * @psalm-suppress PropertyNotSetInConstructor
+ *
  * @author Sergey Borulko <borulkosergey@icloud.com>
  */
 class VerifyAdminBackendSession extends AbstractRouteMiddleware
 {
     /**
-     * Ensure an active backend session exist and user is actually an admin
+     * Ensure an active backend session exist and user is actually an admin.
      *
      * {@inheritDoc}
      */
@@ -47,7 +49,7 @@ class VerifyAdminBackendSession extends AbstractRouteMiddleware
     }
 
     /**
-     * Tells us weather the associated with the current request BE User is an admin
+     * Tells us weather the associated with the current request BE User is an admin.
      */
     private function isAdmin(): bool
     {
@@ -55,7 +57,7 @@ class VerifyAdminBackendSession extends AbstractRouteMiddleware
     }
 
     /**
-     * Retrieve the currently logged in BE User who is associated with the request
+     * Retrieve the currently logged in BE User who is associated with the request.
      */
     private function backendUser(): array
     {

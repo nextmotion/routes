@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Support\Route;
 
@@ -27,7 +28,7 @@ namespace LMS\Routes\Support\Route;
  * ************************************************************* */
 
 use LMS\Routes\Support\ServerRequest;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * @author Sergey Borulko <borulkosergey@icloud.com>
@@ -37,7 +38,7 @@ trait Arguments
     private array $arguments = [];
 
     /**
-     * Return the list of the arguments related to current Extbase request
+     * Return the list of the arguments related to current Extbase request.
      */
     public function getArguments(): array
     {
@@ -45,19 +46,24 @@ trait Arguments
     }
 
     /**
-     * Set all the arguments from the coming route config. Or if the key is empty try to find in globals
+     * Set all the arguments from the coming route config. Or if the key is empty try to find in globals.
      */
     protected function initializeArguments(array $configuration): void
     {
+        $request = $GLOBALS['TYPO3_REQUEST'] ?? null;
+        if (!$request instanceof ServerRequestInterface) {
+            $this->initializeBodyParameters();
+        }
+
         foreach ($this->removeMetadataFrom($configuration) as $name => $value) {
-            $this->arguments[$name] = GeneralUtility::_GP($name) ?? $value;
+            $this->arguments[$name] = $request->getParsedBody()[$name] ?? $request->getQueryParams()[$name] ?? $value;
         }
 
         $this->initializeBodyParameters();
     }
 
     /**
-     * Check if there's any arguments passed inside request Body
+     * Check if there's any arguments passed inside request Body.
      */
     private function initializeBodyParameters(): void
     {
@@ -69,7 +75,7 @@ trait Arguments
     }
 
     /**
-     * Remove all the keys that are not related to extbase argument
+     * Remove all the keys that are not related to extbase argument.
      */
     private function removeMetadataFrom(array $configuration): array
     {

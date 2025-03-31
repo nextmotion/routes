@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Loader;
 
@@ -26,7 +27,8 @@ namespace LMS\Routes\Loader;
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
 
-use TYPO3\CMS\Core\{Core\Environment, Utility\GeneralUtility};
+use Symfony\Component\Finder\Finder;
+use TYPO3\CMS\Core\Core\Environment;
 
 /**
  * @author Sergey Borulko <borulkosergey@icloud.com>
@@ -34,12 +36,12 @@ use TYPO3\CMS\Core\{Core\Environment, Utility\GeneralUtility};
 class Yaml
 {
     /**
-     * Get the loader, which contains all the possible locations where we could find Routes.yml
+     * Get the loader, which contains all the possible locations where we could find Routes.yml.
      */
     public function getLoader(): YamlFileLoader
     {
         return new YamlFileLoader(
-            new \Symfony\Component\Config\FileLocator($this->getPossiblePaths())
+            new \Symfony\Component\Config\FileLocator($this->getPossiblePaths()),
         );
     }
 
@@ -58,12 +60,18 @@ class Yaml
      */
     private function getPossiblePaths(): array
     {
-        $yamlFolderPath = '/Configuration';
-        $customExtensionsFolderPath = Environment::getPublicPath() . '/typo3conf/ext/';
+        if (Environment::isComposerMode()) {
+            $customExtensionsFolderPath = Environment::getProjectPath() . '/vendor/*/*/Configuration';
+        } else {
+            $customExtensionsFolderPath = Environment::getExtensionsPath() . '/*/Configuration';
+        }
+
+        $finder = new Finder();
+        $result = $finder->in($customExtensionsFolderPath)->name('Routes.yaml');
 
         $paths = [];
-        foreach (GeneralUtility::get_dirs($customExtensionsFolderPath) as $extensionKey) {
-            $paths[] = $customExtensionsFolderPath . $extensionKey . $yamlFolderPath;
+        foreach ($result->getIterator() as $path) {
+            $paths[] = $path->getPath();
         }
 
         return $paths;

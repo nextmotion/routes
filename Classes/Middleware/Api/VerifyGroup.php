@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Middleware\Api;
 
@@ -30,6 +31,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * @psalm-suppress PropertyNotSetInConstructor
+ *
  * @author         Sergey Borulko <borulkosergey@icloud.com>
  */
 class VerifyGroup extends AbstractRouteMiddleware
@@ -50,7 +52,7 @@ class VerifyGroup extends AbstractRouteMiddleware
     }
 
     /**
-     * Fetch all the groups current user belong to
+     * Fetch all the groups current user belong to.
      */
     private function getUserGroupsUserBelongTo(): array
     {
@@ -61,7 +63,7 @@ class VerifyGroup extends AbstractRouteMiddleware
 
     /**
      * Retrieve group that guards the route
-     * Example definition: LMS\Routes\Middleware\Api\VerifyGroup:5,tx_demo
+     * Example definition: LMS\Routes\Middleware\Api\VerifyGroup:5,tx_demo.
      */
     private function getRouteGroups(): array
     {
@@ -79,7 +81,7 @@ class VerifyGroup extends AbstractRouteMiddleware
     }
 
     /**
-     * Find all admin users related to current request
+     * Find all admin users related to current request.
      *
      * plugin.tx_myExt.settings.middleware.admin
      */

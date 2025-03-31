@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 /* * *************************************************************
  *
@@ -29,5 +30,5 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 ExtensionManagementUtility::addStaticFile(
     'routes',
     'Configuration/TypoScript',
-    'LMS: Routes'
+    'LMS: Routes',
 );

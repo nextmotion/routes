@@ -1,9 +1,10 @@
 <?php
+
 /** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpRedundantCatchClauseInspection */
 /** @noinspection PhpFullyQualifiedNameUsageInspection */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace LMS\Routes\Tests\Functional;
 
@@ -31,15 +32,15 @@ namespace LMS\Routes\Tests\Functional;
  * ************************************************************* */
 
 use LogicException;
-use TYPO3\CMS\Core\Exception;
-use TYPO3\CMS\Core\Core\Bootstrap;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Configuration\SiteConfiguration;
+use TYPO3\CMS\Core\Core\Bootstrap;
+use TYPO3\CMS\Core\Exception;
 use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
-use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
-use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalResponse;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequestContext;
+use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalResponse;
+use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
  * @author Borulko Sergey <borulkosergey@icloud.com>
@@ -54,7 +55,7 @@ abstract class BaseTest extends FunctionalTestCase
     /**
      * @var array
      */
-    protected $testExtensionsToLoad = ['typo3conf/ext/routes', 'typo3conf/ext/demo'];
+    protected array $testExtensionsToLoad = ['typo3conf/ext/routes', 'typo3conf/ext/demo'];
 
     /**
      * @throws \Doctrine\DBAL\DBALException
@@ -69,7 +70,8 @@ abstract class BaseTest extends FunctionalTestCase
         $this->loadFixtures();
     }
 
-    protected function writeSiteConfiguration(string $identifier, array $site = [], array $languages = [], array $errorHandling = []): void {
+    protected function writeSiteConfiguration(string $identifier, array $site = [], array $languages = [], array $errorHandling = []): void
+    {
         $configuration = $site;
         if (!empty($languages)) {
             $configuration['languages'] = $languages;
@@ -79,7 +81,7 @@ abstract class BaseTest extends FunctionalTestCase
         }
         $siteConfiguration = new SiteConfiguration(
             $this->instancePath . '/typo3conf/sites/',
-            $this->getContainer()->get('cache.core')
+            $this->getContainer()->get('cache.core'),
         );
 
         try {
@@ -105,6 +107,7 @@ abstract class BaseTest extends FunctionalTestCase
         $configuration['typo3Language'] = 'default';
         $configuration['flag'] = 'global';
         unset($configuration['fallbackType'], $configuration['fallbacks']);
+
         return $configuration;
     }
 
@@ -113,13 +116,14 @@ abstract class BaseTest extends FunctionalTestCase
         if (!isset(static::LANGUAGE_PRESETS[$identifier])) {
             throw new LogicException(
                 sprintf('Undefined preset identifier "%s"', $identifier),
-                1533893665
+                1533893665,
             );
         }
+
         return static::LANGUAGE_PRESETS[$identifier];
     }
 
-    protected function buildLanguageConfiguration(string $identifier, string $base, array $fallbackIdentifiers = [], string $fallbackType = null): array
+    protected function buildLanguageConfiguration(string $identifier, string $base, array $fallbackIdentifiers = [], ?string $fallbackType = null): array
     {
         $preset = $this->resolveLanguagePreset($identifier);
 
@@ -141,9 +145,10 @@ abstract class BaseTest extends FunctionalTestCase
             $fallbackIds = array_map(
                 function (string $fallbackIdentifier) {
                     $preset = $this->resolveLanguagePreset($fallbackIdentifier);
+
                     return $preset['id'];
                 },
-                $fallbackIdentifiers
+                $fallbackIdentifiers,
             );
             $configuration['fallbackType'] = $fallbackType ?? 'fallback';
             $configuration['fallbacks'] = implode(',', $fallbackIds);
@@ -157,8 +162,8 @@ abstract class BaseTest extends FunctionalTestCase
         $this->setUpFrontendRootPage(
             1,
             [
-                'EXT:routes/Tests/Fixtures/Acceptance/root_page.typoscript'
-            ]
+                'EXT:routes/Tests/Fixtures/Acceptance/root_page.typoscript',
+            ],
         );
 
         $this->writeSiteConfiguration(
@@ -166,7 +171,7 @@ abstract class BaseTest extends FunctionalTestCase
             $this->buildSiteConfiguration(1, 'https://routes.ddev.site/'),
             [
                 $this->buildDefaultLanguageConfiguration('EN', '/'),
-            ]
+            ],
         );
     }
 
@@ -178,11 +183,13 @@ abstract class BaseTest extends FunctionalTestCase
             ->withPageId(1)
             ->withHeader('Content-Type', 'application/json')
             ->withHeader('Accept', 'application/json')
-            ->withQueryParameters($query);
+            ->withQueryParameters($query)
+        ;
+
+        $formProtectionFactory = GeneralUtility::makeInstance(FormProtectionFactory::class);
 
         if ($withCsrf) {
-            $csrf = FormProtectionFactory::get()
-                ->generateToken('routes', 'api','1');
+            $csrf = $formProtectionFactory->generateToken('routes', 'api', '1');
 
             $request = $request->withAddedHeader('X-CSRF-TOKEN', $csrf);
         }
@@ -190,11 +197,12 @@ abstract class BaseTest extends FunctionalTestCase
         $settings = [
             'SYS' => [
                 'encryptionKey' => self::ENCRYPTION_KEY,
-            ]
+            ],
         ];
 
         $context = (new InternalRequestContext())
-            ->withGlobalSettings(['TYPO3_CONF_VARS' => $settings]);
+            ->withGlobalSettings(['TYPO3_CONF_VARS' => $settings])
+        ;
 
         if ($authenticated) {
             $context = $context->withFrontendUserId(1);

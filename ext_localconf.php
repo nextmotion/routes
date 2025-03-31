@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 /* * *************************************************************
  *
@@ -24,14 +25,16 @@ declare(strict_types = 1);
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
 
-defined('TYPO3') or die();
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants(
-    "@import 'EXT:routes/Configuration/TypoScript/constants.typoscript'"
+defined('TYPO3') or exit;
+
+TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptConstants(
+    "@import 'EXT:routes/Configuration/TypoScript/constants.typoscript'",
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup(
-    "@import 'EXT:routes/Configuration/TypoScript/setup.typoscript'"
+TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup(
+    "@import 'EXT:routes/Configuration/TypoScript/setup.typoscript'",
 );
 
 $cache = $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'];
@@ -47,24 +50,25 @@ if (!array_key_exists('tx_routes', $cache)) {
             'SYS' => [
                 'routing' => [
                     'enhancers' => [
-                        'Routes' => \LMS\Routes\Routing\RestApiEnhancer::class
-                    ]
-                ]
-            ]
-        ]
+                        'Routes' => LMS\Routes\Routing\RestApiEnhancer::class,
+                    ],
+                ],
+            ],
+        ],
     );
 })();
 
 $GLOBALS['TYPO3_CONF_VARS']['FE']['disableNoCacheParameter'] = false;
 $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['routes']['routesFileName'] = 'Routes';
 
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+ExtensionUtility::configurePlugin(
     'Routes',
     'RoutesApi',
     [
-        \LMS\Routes\Controller\ManagementController::class => 'ping'
+        LMS\Routes\Controller\ManagementController::class => 'ping',
     ],
     [
-        \LMS\Routes\Controller\ManagementController::class => 'ping'
-    ]
+        LMS\Routes\Controller\ManagementController::class => 'ping',
+    ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );

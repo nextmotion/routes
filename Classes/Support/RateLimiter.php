@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Support;
 
@@ -31,6 +32,7 @@ use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 
 /**
  * @psalm-suppress PropertyNotSetInConstructor
+ *
  * @author         Sergey Borulko <borulkosergey@icloud.com>
  */
 class RateLimiter
@@ -69,7 +71,7 @@ class RateLimiter
     public function hit(string $key, int $decayMinutes = 1): void
     {
         $this->cache->set(
-            $key . '_timer', $this->availableAt($decayMinutes), [], $decayMinutes
+            $key . '_timer', $this->availableAt($decayMinutes), [], $decayMinutes,
         );
 
         $hits = (int)$this->cache->get($key) + 1;

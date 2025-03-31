@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Tests\Acceptance\Support\Extension;
 
@@ -44,17 +45,17 @@ class BackendEnvironment extends \TYPO3\TestingFramework\Core\Acceptance\Extensi
             'frontend',
             'recordlist',
             'scheduler',
-            'fluid_styled_content'
+            'fluid_styled_content',
         ],
         'testExtensionsToLoad' => [
-            'typo3conf/ext/routes'
+            '../vendor/lms/routes',
         ],
         'xmlDatabaseFixtures' => [
             'typo3conf/ext/routes/Tests/Fixtures/Acceptance/pages.xml',
             'typo3conf/ext/routes/Tests/Fixtures/Acceptance/sys_template.xml',
             'PACKAGE:typo3/testing-framework/Resources/Core/Acceptance/Fixtures/be_users.xml',
             'PACKAGE:typo3/testing-framework/Resources/Core/Acceptance/Fixtures/be_groups.xml',
-            'PACKAGE:typo3/testing-framework/Resources/Core/Acceptance/Fixtures/be_sessions.xml'
-        ]
+            'PACKAGE:typo3/testing-framework/Resources/Core/Acceptance/Fixtures/be_sessions.xml',
+        ],
     ];
 }

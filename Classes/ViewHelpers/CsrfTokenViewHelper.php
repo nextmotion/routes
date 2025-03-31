@@ -1,7 +1,8 @@
 <?php
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace LMS\Routes\ViewHelpers;
 
@@ -28,11 +29,12 @@ namespace LMS\Routes\ViewHelpers;
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
 
-use TYPO3\CMS\Core\Registry;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Core\Environment;
-use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
+use TYPO3\CMS\Core\Registry;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * @author Borulko Sergey <borulkosergey@icloud.com>
@@ -54,8 +56,10 @@ class CsrfTokenViewHelper extends AbstractViewHelper
 
         $this->registry->set('tx_routes', $this->user, $action);
 
-        return FormProtectionFactory::get()
-            ->generateToken('routes', $action, $this->user);
+        return GeneralUtility::makeInstance(FormProtectionFactory::class)
+            ->createForType('frontend')
+            ->generateToken('routes', $action, $this->user)
+        ;
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /* * *************************************************************
  *
@@ -25,19 +25,4 @@ declare(strict_types = 1);
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
 
-defined('TYPO3') or die();
-
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-    'Routes',
-    'site',
-    'routes',
-    'bottom',
-    [
-        \LMS\Routes\Controller\ManagementController::class => 'index, show'
-    ],
-    [
-        'icon' => 'typo3conf/ext/routes/ext_icon.svg',
-        'access' => 'admin',
-        'labels' => 'LLL:EXT:routes/Resources/Private/Language/locallang_mod.xlf'
-    ]
-);
+defined('TYPO3') or exit;

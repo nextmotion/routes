@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Tests\Acceptance\Support;
 
@@ -26,13 +27,14 @@ namespace LMS\Routes\Tests\Acceptance\Support;
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
 
-use TYPO3\TestingFramework\Core\Acceptance\Step\FrameSteps;
 use LMS\Routes\Tests\Acceptance\Support\_generated\BackendTesterActions;
+use TYPO3\TestingFramework\Core\Acceptance\Step\FrameSteps;
 
 /**
  * @author Sergey Borulko <borulkosergey@icloud.com>
  */
 class BackendTester extends \Codeception\Actor
 {
-    use BackendTesterActions, FrameSteps;
+    use BackendTesterActions;
+    use FrameSteps;
 }

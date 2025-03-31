@@ -1,7 +1,8 @@
 <?php
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace LMS\Routes\Middleware\Api;
 
@@ -28,16 +29,16 @@ namespace LMS\Routes\Middleware\Api;
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
 
-use TYPO3\CMS\Core\Registry;
-use LMS\Routes\Support\User;
 use LMS\Routes\Support\Redirect;
 use LMS\Routes\Support\Response;
 use LMS\Routes\Support\Throttler;
 use LMS\Routes\Support\TypoScript;
-use TYPO3\CMS\Core\Context\Context;
+use LMS\Routes\Support\User;
 use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Core\Http\PropagateResponseException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Http\PropagateResponseException;
+use TYPO3\CMS\Core\Registry;
 
 /**
  * @author Sergey Borulko <borulkosergey@icloud.com>
@@ -63,7 +64,8 @@ abstract class AbstractRouteMiddleware
         $this->throttler = $throttler;
 
         $authUid = (int)$ctx
-            ->getPropertyFromAspect('frontend.user', 'id');
+            ->getPropertyFromAspect('frontend.user', 'id')
+        ;
 
         $this->user->setUser($authUid);
     }

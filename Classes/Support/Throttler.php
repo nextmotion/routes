@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Support;
 
@@ -53,12 +54,12 @@ class Throttler
     }
 
     /**
-     * Determine if the session has too many attempts
+     * Determine if the session has too many attempts.
      */
     public function hasTooManyAttempts(): bool
     {
         return $this->limiter->tooManyAttempts(
-            $this->throttleKey(), $this->maxAttempts
+            $this->throttleKey(), $this->maxAttempts,
         );
     }
 
@@ -68,12 +69,12 @@ class Throttler
     public function incrementAttempts(): void
     {
         $this->limiter->hit(
-            $this->throttleKey(), $this->decayMinutes * 60
+            $this->throttleKey(), $this->decayMinutes * 60,
         );
     }
 
     /**
-     * Use request ip address as a throttle key
+     * Use request ip address as a throttle key.
      */
     public function throttleKey(): string
     {

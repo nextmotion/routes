@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Middleware\Api;
 
@@ -28,6 +29,7 @@ namespace LMS\Routes\Middleware\Api;
 
 /**
  * @psalm-suppress PropertyNotSetInConstructor
+ *
  * @author         Sergey Borulko <borulkosergey@icloud.com>
  */
 class Throttle extends AbstractRouteMiddleware

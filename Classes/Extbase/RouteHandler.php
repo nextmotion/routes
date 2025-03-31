@@ -1,7 +1,8 @@
 <?php
+
 /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace LMS\Routes\Extbase;
 
@@ -28,16 +29,21 @@ namespace LMS\Routes\Extbase;
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
 
+use LMS\Routes\Domain\Model\Middleware;
+use LMS\Routes\Domain\Model\Route;
+use LMS\Routes\Service\RouteService;
+use LMS\Routes\Support\ErrorBuilder;
 use LMS\Routes\Support\Response;
-use TYPO3\CMS\Extbase\Core\Bootstrap;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Http\PropagateResponseException;
-use LMS\Routes\Support\{ErrorBuilder, ServerRequest};
-use Symfony\Component\Routing\Exception\NoConfigurationException;
+use LMS\Routes\Support\ServerRequest;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use Symfony\Component\Routing\Exception\NoConfigurationException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Psr\Http\{Message\ResponseInterface, Message\ServerRequestInterface};
-use LMS\Routes\{Domain\Model\Middleware, Domain\Model\Route, Service\RouteService};
+use TYPO3\CMS\Core\Http\PropagateResponseException;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Core\Bootstrap;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * @author Sergey Borulko <borulkosergey@icloud.com>
@@ -75,10 +81,8 @@ class RouteHandler
      */
     public function handle(ServerRequestInterface $request)
     {
-        $slug = $request->getUri()->getPath();
-
         try {
-            $this->processRoute($request, $this->routeService->findRouteFor($slug));
+            $this->processRoute($request, $this->routeService->findRouteFor($request));
         } catch (MethodNotAllowedException $exception) {
             $this->output = $this->error->messageFor($exception);
             $this->status = (int)$exception->getCode() ?: 200;
@@ -86,7 +90,7 @@ class RouteHandler
     }
 
     /**
-     * Creates the PSR7 Response based on output that was retrieved from FrontendRequestHandler
+     * Creates the PSR7 Response based on output that was retrieved from FrontendRequestHandler.
      */
     public function generateResponse(): ResponseInterface
     {
@@ -99,18 +103,19 @@ class RouteHandler
      */
     private function processRoute(ServerRequestInterface $request, Route $route): void
     {
+        /** @var TypoScriptFrontendController $frontendController */
+        $frontendController = $request->getAttribute('frontend.controller');
         if (array_key_exists('routes', $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'])) {
-           $activeCache = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['routes']['activeCache'] ?? 0;
+            $activeCache = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['routes']['activeCache'] ?? 0;
             $activeCache = (bool)$activeCache;
             if (!$activeCache) {
-                $GLOBALS['TSFE']->set_no_cache('Conflicts with more than one action');
+                $frontendController->set_no_cache('Conflicts with more than one action');
             }
         }
-        $GLOBALS['TSFE']->determineId($request);
-        $GLOBALS['TSFE']->getConfigArray();
+        $request->withAttribute('frontendController', $frontendController);
 
         $this->processMiddleware(
-            $request->withQueryParams($route->getArguments())
+            $request->withQueryParams($route->getArguments()),
         );
 
         $this->createActionArgumentsFrom($route);
@@ -118,7 +123,7 @@ class RouteHandler
         $this->bootstrap([
             'pluginName' => $route->getPlugin(),
             'vendorName' => $route->getController()->getVendor(),
-            'extensionName' => $route->getController()->getExtension()
+            'extensionName' => $route->getController()->getExtension(),
         ]);
     }
 
@@ -136,9 +141,7 @@ class RouteHandler
             return;
         }
 
-        $slug = $request->getUri()->getPath();
-
-        foreach ($this->routeService->findMiddlewareFor($slug) as $middlewareRoute) {
+        foreach ($this->routeService->findMiddlewareFor($request) as $middlewareRoute) {
             $middleware = GeneralUtility::makeInstance(Middleware::class);
             $middleware->setRoute($middlewareRoute);
 
@@ -179,6 +182,6 @@ class RouteHandler
      */
     private function bootstrap(array $config): void
     {
-        $this->output = $this->bootstrap->run('', $config);
+        $this->output = $this->bootstrap->run('', $config, ServerRequest::getInstance());
     }
 }

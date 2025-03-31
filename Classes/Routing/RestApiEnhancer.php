@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Routing;
 
@@ -27,16 +28,19 @@ namespace LMS\Routes\Routing;
  * ************************************************************* */
 
 use TYPO3\CMS\Core\Routing\Enhancer\PluginEnhancer;
-use TYPO3\CMS\Core\Routing\{Route, RouteCollection};
+use TYPO3\CMS\Core\Routing\Route;
+use TYPO3\CMS\Core\Routing\RouteCollection;
 
 /**
  * @author Sergey Borulko <borulkosergey@icloud.com>
+ *
  * @psalm-suppress PropertyNotSetInConstructor
  */
 class RestApiEnhancer extends PluginEnhancer
 {
     /**
      * {@inheritdoc}
+     *
      * @psalm-suppress InternalClass
      * @psalm-suppress PossiblyNullReference
      */

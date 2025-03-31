@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Support;
 
@@ -52,7 +53,7 @@ class ServerRequest
     }
 
     /**
-     * Check whether data can be converted to json
+     * Check whether data can be converted to json.
      */
     public static function isJson(string $data): bool
     {
@@ -71,7 +72,7 @@ class ServerRequest
         $existingNamespaceValues = ServerRequest::getParametersFor($namespace);
 
         $GLOBALS['TYPO3_REQUEST'] = ServerRequest::getInstance()->withQueryParams([
-            $namespace => array_merge([$name => $value], $existingNamespaceValues)
+            $namespace => array_merge([$name => $value], $existingNamespaceValues),
         ]);
     }
 

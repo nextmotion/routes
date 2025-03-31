@@ -1,7 +1,8 @@
 <?php
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace LMS\Routes\Support;
 
@@ -41,7 +42,7 @@ class User
 
     public function __construct(ConnectionPool $connection)
     {
-        $this->builder = $connection->getQueryBuilderForTable('fe_users');;
+        $this->builder = $connection->getQueryBuilderForTable('fe_users');
     }
 
     public function getUser(): int
@@ -68,7 +69,8 @@ class User
             ->from('fe_users')
             ->where(...$constraints)
             ->execute()
-            ->fetchAssociative();
+            ->fetchAssociative()
+        ;
     }
 
     /**

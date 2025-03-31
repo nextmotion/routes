@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Tests\Acceptance\Middleware;
 
@@ -37,7 +38,7 @@ class Cest
      * This route requires group of UID 5 for access,
      * or admin group (1 | 2)
      * The user with session edeb126f7862e85884fd1bfa7bcefaf3 has group 1.
-     * So we should give the access
+     * So we should give the access.
      */
     public function group_middleware_can_pass_if_admin(AcceptanceTester $I)
     {
@@ -54,7 +55,7 @@ class Cest
      * or user from admin list can also perform the request
      * The user with session edeb126f7862e85884fd1bfa7bcefaf3 has uid <1>
      * We pass <user> in params with <22>, but it's not an owner of the resource.
-     * But our admin user has uid <1>, so we should give the access
+     * But our admin user has uid <1>, so we should give the access.
      */
     public function user_middleware_can_pass_if_admin(AcceptanceTester $I)
     {
@@ -70,7 +71,7 @@ class Cest
      * This route requires user that makes a request is the same as in param for access.
      * The user with session edeb126f7862e85884fd1bfa7bcefaf3 has uid <1>
      * We pass <user> in params with same identifier
-     * So we should give the access
+     * So we should give the access.
      */
     public function user_middleware_can_pass(AcceptanceTester $I)
     {
@@ -86,7 +87,7 @@ class Cest
      * This route requires user that makes a request is the same as in param for access.
      * The user with session edeb126f7862e85884fd1bfa7bcefaf3 has uid <1>
      * We pass <user> in params with identifier that equal <999>
-     * So we should deny the request
+     * So we should deny the request.
      */
     public function user_middleware_can_block(AcceptanceTester $I)
     {
@@ -102,7 +103,7 @@ class Cest
     /**
      * This route requires group of UID 999 for access.
      * The user with session edeb126f7862e85884fd1bfa7bcefaf3 has group 1.
-     * So we should deny the request
+     * So we should deny the request.
      */
     public function group_middleware_can_block(AcceptanceTester $I)
     {
@@ -118,7 +119,7 @@ class Cest
     /**
      * This route requires group of UID 1 | 2 for access.
      * The user with session edeb126f7862e85884fd1bfa7bcefaf3 has group 1.
-     * So we should give the access
+     * So we should give the access.
      */
     public function group_middleware_can_pass(AcceptanceTester $I)
     {
@@ -132,7 +133,7 @@ class Cest
 
     /**
      * User can be tapped only 2 times.
-     * On the third tap we should block the request
+     * On the third tap we should block the request.
      */
     public function throttle_middleware_blocks_dos(AcceptanceTester $I)
     {
@@ -152,7 +153,7 @@ class Cest
 
     /**
      * Route requires authenticated user, but the current session is anonymous.
-     * The request should be blocked
+     * The request should be blocked.
      */
     public function auth_middleware_requires_user_to_be_logged_in(AcceptanceTester $I)
     {
@@ -168,7 +169,7 @@ class Cest
     /**
      * Route requires authenticated user and we have one.
      * But user does not have a proper CSRF token
-     * The request should be blocked
+     * The request should be blocked.
      */
     public function auth_middleware_requires_proper_csrf_token(AcceptanceTester $I)
     {
@@ -184,7 +185,7 @@ class Cest
 
     /**
      * Route requires authenticated user and we have one, csrf token is also correct.
-     * So we should give the access
+     * So we should give the access.
      */
     public function auth_middleware_can_pass(AcceptanceTester $I)
     {

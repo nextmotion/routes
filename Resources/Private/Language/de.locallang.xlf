@@ -7,40 +7,40 @@
 				<source>ID</source>
 			</trans-unit>
 			<trans-unit id="route.title">
-				<source>Title</source>
+				<source>Titel</source>
 			</trans-unit>
 			<trans-unit id="route.conditions">
-				<source>Conditions</source>
+				<source>Bedingungen</source>
 			</trans-unit>
 			<trans-unit id="route.defaults">
-				<source>Defaults</source>
+				<source>Standards</source>
 			</trans-unit>
 			<trans-unit id="route.scope">
-				<source>Scope</source>
+				<source>Bereich</source>
 			</trans-unit>
 			<trans-unit id="route.controller">
 				<source>Controller</source>
 			</trans-unit>
 			<trans-unit id="route.endpoint">
-				<source>Endpoint</source>
+				<source>Endpunkt</source>
 			</trans-unit>
 			<trans-unit id="route.methods">
-				<source>Methods</source>
+				<source>Methoden</source>
 			</trans-unit>
 			<trans-unit id="route.options">
-				<source>Options</source>
+				<source>Optionen</source>
 			</trans-unit>
 			<trans-unit id="route.middleware">
 				<source>Middleware</source>
 			</trans-unit>
 			<trans-unit id="route.requirements">
-				<source>Requirements</source>
+				<source>Voraussetzungen</source>
 			</trans-unit>
 			<trans-unit id="route.schemas">
 				<source>Schemas</source>
 			</trans-unit>
 			<trans-unit id="route.management.title">
-				<source>Routes Overview</source>
+				<source>Übersicht der Routen</source>
 			</trans-unit>
 		</body>
 	</file>

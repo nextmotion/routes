@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Middleware\Api;
 
@@ -30,6 +31,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * @psalm-suppress PropertyNotSetInConstructor
+ *
  * @author Sergey Borulko <borulkosergey@icloud.com>
  */
 class VerifyUser extends AbstractRouteMiddleware
@@ -53,7 +55,7 @@ class VerifyUser extends AbstractRouteMiddleware
     }
 
     /**
-     * Retrieves the value of the action parameter that contains <user identifier>
+     * Retrieves the value of the action parameter that contains <user identifier>.
      */
     private function getRequestUserID(): int
     {
@@ -61,7 +63,7 @@ class VerifyUser extends AbstractRouteMiddleware
     }
 
     /**
-     * Retrieve the name of the parameter that related to user field
+     * Retrieve the name of the parameter that related to user field.
      */
     private function getUserPropertyName(): string
     {
@@ -69,13 +71,14 @@ class VerifyUser extends AbstractRouteMiddleware
     }
 
     /**
-     * Find all admin users related to current request
+     * Find all admin users related to current request.
      */
     private function getAdminUsers(): array
     {
         $ext = $this->getAdminExtensionName();
 
-        $admins = $this->getSettings($ext)['middleware.']['admin.']['users'];
+        $ts = $this->getSettings($ext);
+        $admins = $ts['middleware.']['admin.']['users'] ?? '';
 
         return GeneralUtility::intExplode(',', $admins, true);
     }

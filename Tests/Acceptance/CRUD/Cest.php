@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Tests\Acceptance\CRUD;
 
@@ -57,17 +58,17 @@ class Cest
         $I->seeResponseContains('title');
     }
 
-//    /**
-//     * @param AcceptanceTester $I
-//     */
-//    public function store(AcceptanceTester $I)
-//    {
-//        $I->haveHttpHeader('Accept', 'application/json');
-//        $I->sendPOST('https://routes.ddev.site/api/demo/photos', '{"data": {"title": "new"}}');
-//
-//        $I->seeHttpHeader('Content-Type', 'application/json; charset=utf-8');
-//        $I->seeResponseContainsJson(['success' => true]);
-//    }
+    //    /**
+    //     * @param AcceptanceTester $I
+    //     */
+    //    public function store(AcceptanceTester $I)
+    //    {
+    //        $I->haveHttpHeader('Accept', 'application/json');
+    //        $I->sendPOST('https://routes.ddev.site/api/demo/photos', '{"data": {"title": "new"}}');
+    //
+    //        $I->seeHttpHeader('Content-Type', 'application/json; charset=utf-8');
+    //        $I->seeResponseContainsJson(['success' => true]);
+    //    }
 
     /**
      * @param AcceptanceTester $I
@@ -90,7 +91,7 @@ class Cest
         $I->sendPUT('https://routes.ddev.site/api/demo/photos/parse-body-param/1', ['foo' => 'bar']);
 
         $I->seeResponseContainsJson([
-            'foo' => 'bar'
+            'foo' => 'bar',
         ]);
     }
 
@@ -102,19 +103,19 @@ class Cest
         $I->sendPUT('https://routes.ddev.site/api/demo/photos/parse-body-param/1', ['foo' => 'bar']);
 
         $I->seeResponseContainsJson([
-            'foo' => 'bar'
+            'foo' => 'bar',
         ]);
     }
 
-//    /**
-//     * @param AcceptanceTester $I
-//     */
-//    public function destroy(AcceptanceTester $I)
-//    {
-//        $I->haveHttpHeader('Accept', 'application/json');
-//        $I->sendDELETE('https://routes.ddev.site/api/demo/photos/999');
-//
-//        $I->seeHttpHeader('Content-Type', 'application/json; charset=utf-8');
-//        $I->seeResponseContainsJson(['success' => true]);
-//    }
+    //    /**
+    //     * @param AcceptanceTester $I
+    //     */
+    //    public function destroy(AcceptanceTester $I)
+    //    {
+    //        $I->haveHttpHeader('Accept', 'application/json');
+    //        $I->sendDELETE('https://routes.ddev.site/api/demo/photos/999');
+    //
+    //        $I->seeHttpHeader('Content-Type', 'application/json; charset=utf-8');
+    //        $I->seeResponseContainsJson(['success' => true]);
+    //    }
 }

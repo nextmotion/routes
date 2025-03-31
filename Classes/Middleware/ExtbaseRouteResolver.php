@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Middleware;
 
@@ -27,14 +28,17 @@ namespace LMS\Routes\Middleware;
  * ************************************************************* */
 
 use Exception;
-use Psr\Log\LoggerInterface;
-use TYPO3\CMS\Core\Log\LogManager;
 use LMS\Routes\Extbase\RouteHandler;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Routing\Exception\NoConfigurationException;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
-use Psr\Http\Message\{ServerRequestInterface, ResponseInterface};
-use Symfony\Component\Routing\Exception\{NoConfigurationException, ResourceNotFoundException};
+use TYPO3\CMS\Core\Log\LogManager;
+use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 
 /**
  * @author Sergey Borulko <borulkosergey@icloud.com>
@@ -62,11 +66,11 @@ class ExtbaseRouteResolver implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $request = $this->disableRouting($request);
+        $request = $request->withAttribute('extbase', new ExtbaseRequestParameters());
 
         try {
             $this->apiHandler->handle($request);
-        } catch (ResourceNotFoundException | NoConfigurationException $e) {
+        } catch (ResourceNotFoundException|NoConfigurationException $e) {
             // Usually thrown when requested api slug is not registered.
             // Like `/api/bla`
             return $handler->handle($request);
@@ -87,7 +91,7 @@ class ExtbaseRouteResolver implements MiddlewareInterface
     }
 
     /**
-     * We unset routing attribute to prevent it from next middleware redirects/resolves
+     * We unset routing attribute to prevent it from next middleware redirects/resolves.
      */
     private function disableRouting(ServerRequestInterface $request): ServerRequestInterface
     {

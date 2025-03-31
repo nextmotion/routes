@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Support;
 
@@ -64,7 +65,8 @@ class Redirect
             ->setLinkAccessRestrictedPages(true)
             ->setCreateAbsoluteUri($absolute)
             ->setTargetPageUid($pid)
-            ->build();
+            ->build()
+        ;
     }
 
     public function factory(): ResponseFactory

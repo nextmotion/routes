@@ -1,7 +1,8 @@
 <?php
+
 /** @noinspection PhpUnused */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace LMS\Routes\Controller;
 
@@ -31,15 +32,21 @@ namespace LMS\Routes\Controller;
 use LMS\Routes\Service\Router;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Routing\Router as SymfonyRouter;
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
  * @psalm-suppress PropertyNotSetInConstructor
+ *
  * @author         Sergey Borulko <borulkosergey@icloud.com>
  */
 class ManagementController extends ActionController
 {
     private SymfonyRouter $router;
+
+    public function __construct(private readonly ModuleTemplateFactory $moduleTemplateFactory)
+    {
+    }
 
     public function injectRouter(Router $router): void
     {
@@ -47,29 +54,30 @@ class ManagementController extends ActionController
     }
 
     /**
-     * Render existing routes
+     * Render existing routes.
      */
     public function pingAction(): ResponseInterface
     {
         $json = (string)json_encode(
             [
-                'status' => 'pong'
-            ]
+                'status' => 'pong',
+            ],
         );
 
         return $this->jsonResponse($json);
     }
 
     /**
-     * Render existing routes
+     * Render existing routes.
      */
     public function indexAction(): ResponseInterface
     {
+        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $routes = $this->router->getRouteCollection();
 
-        $this->view->assign('routes', $routes);
+        $moduleTemplate->assign('routes', $routes);
 
-        return $this->htmlResponse();
+        return $moduleTemplate->renderResponse('Management/Index');
     }
 
     /**
@@ -78,13 +86,15 @@ class ManagementController extends ActionController
      */
     public function showAction(string $name): ResponseInterface
     {
+        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+
         $uri = $this->request->getUri();
         $host = "{$uri->getScheme()}://{$uri->getHost()}";
 
         $route = $this->router->getRouteCollection()->get($name);
 
-        $this->view->assign('route', $route->setHost($host));
+        $moduleTemplate->assign('route', $route->setHost($host));
 
-        return $this->htmlResponse();
+        return $moduleTemplate->renderResponse('Management/Show');
     }
 }

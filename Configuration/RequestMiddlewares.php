@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 /* * *************************************************************
  *
@@ -35,8 +36,8 @@ return [
             'target' => ExtbaseRouteResolver::class,
             'description' => 'Attempts to resolve the Extbase Action endpoint by existing YAML configs',
             'after' => [
-                'typo3/cms-frontend/prepare-tsfe-rendering'
-            ]
-        ]
-    ]
+                'typo3/cms-frontend/prepare-tsfe-rendering',
+            ],
+        ],
+    ],
 ];

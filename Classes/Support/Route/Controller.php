@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Support\Route;
 
@@ -27,6 +28,7 @@ namespace LMS\Routes\Support\Route;
  * ************************************************************* */
 
 use LMS\Routes\Support\Request;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * @author Sergey Borulko <borulkosergey@icloud.com>
@@ -41,8 +43,9 @@ class Controller
         $this->request = $request;
     }
 
-    public function initializeController(string $controllerFQCN): void
+    public function initializeController(string $controllerFQCN, ServerRequestInterface $request): void
     {
+        $this->request->setOriginalRequest($request);
         $this->controllerFQCN = $controllerFQCN;
     }
 

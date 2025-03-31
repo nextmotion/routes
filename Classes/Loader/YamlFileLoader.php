@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace LMS\Routes\Loader;
 
@@ -26,9 +27,9 @@ namespace LMS\Routes\Loader;
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
 
-use TYPO3\CMS\Core\Routing\RouteCollection;
-use Symfony\Component\Routing\Loader\YamlFileLoader as SymfonyLoader;
 use Symfony\Component\Config\Exception\FileLocatorFileNotFoundException;
+use Symfony\Component\Routing\Loader\YamlFileLoader as SymfonyLoader;
+use TYPO3\CMS\Core\Routing\RouteCollection;
 
 /**
  * @author Sergey Borulko <borulkosergey@icloud.com>
@@ -37,11 +38,12 @@ class YamlFileLoader extends SymfonyLoader
 {
     /**
      * {@inheritdoc}
+     *
      * @psalm-suppress InternalClass
      * @psalm-suppress MissingParamType
      * @psalm-suppress ParamNameMismatch
      */
-    public function load($file, string $type = null): RouteCollection
+    public function load($file, ?string $type = null): RouteCollection
     {
         $collection = new RouteCollection();
 
@@ -56,11 +58,12 @@ class YamlFileLoader extends SymfonyLoader
     {
         $yml = $this->retrievePathFor($file . '.yml');
         $yaml = $this->retrievePathFor($file . '.yaml');
-        if (array_key_exists("additionalPathList", $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['routes'])) {
+        if (array_key_exists('additionalPathList', $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['routes'])) {
             $custom = (array)$GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['routes']['additionalPathList'];
         } else {
             $custom = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['routes']['additionalPathList'] = [];
         }
+
         return array_merge($yml, $yaml, $custom);
     }
 

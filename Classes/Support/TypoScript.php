@@ -1,7 +1,8 @@
 <?php
+
 /** @noinspection PhpUnusedParameterInspection */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace LMS\Routes\Support;
 
@@ -29,8 +30,8 @@ namespace LMS\Routes\Support;
  * ************************************************************* */
 
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface as Configuration;
+use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 
 /**
  * @author Sergey Borulko <borulkosergey@icloud.com>
@@ -52,13 +53,13 @@ class TypoScript
     }
 
     /**
-     * Get all TypoScript definition for the requested extension (tx_extKey)
+     * Get all TypoScript definition for the requested extension (tx_extKey).
      */
     private function retrieveFullTypoScriptConfigurationFor(string $extKey): array
     {
         try {
             $ts = $this->manager->getConfiguration(
-                Configuration::CONFIGURATION_TYPE_FULL_TYPOSCRIPT
+                Configuration::CONFIGURATION_TYPE_FULL_TYPOSCRIPT,
             );
         } catch (InvalidConfigurationTypeException $e) {
             return [];
